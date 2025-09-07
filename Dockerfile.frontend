@@ -1,0 +1,16 @@
+# Stage 1: build frontend
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /app
+COPY frontend/ ./
+
+# Copy your custom logo into place
+COPY army.svg ./public/army.svg
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN pnpm install --frozen-lockfile
+RUN pnpm run build
+
+# Stage 2: serve with nginx
+FROM nginx:alpine
+COPY --from=frontend-builder /app/dist /usr/share/nginx/html
