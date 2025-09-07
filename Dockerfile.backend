@@ -1,0 +1,41 @@
+# Stage 1: Build frontend
+FROM node:20-alpine AS frontend-builder
+WORKDIR /app
+COPY frontend/ ./
+COPY army.svg ./public/army.svg
+RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN pnpm install --frozen-lockfile
+RUN pnpm run build
+
+# Stage 2: Build backend
+FROM golang:1.23 AS backendbuilder
+WORKDIR /app
+
+# Install git (needed for go modules)
+RUN apt-get update && apt-get install -y git
+
+# Copy go.mod and go.sum first
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy backend sources
+COPY . ./
+
+# Copy built frontend from previous stage
+COPY --from=frontend-builder /app/dist ./frontend/dist
+
+# Build the binary
+RUN go build -o vikunja .
+
+# Stage 2: Runtime
+FROM debian:bookworm-slim AS backend
+WORKDIR /app
+
+# Copy compiled binary
+COPY --from=backendbuilder /app/vikunja /app/vikunja
+
+# Expose backend port
+EXPOSE 3456
+
+# Run backend
+ENTRYPOINT ["/app/vikunja"]
