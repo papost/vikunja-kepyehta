@@ -23,6 +23,7 @@ services:
       VIKUNJA_DATABASE_PASSWORD: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
       VIKUNJA_SERVICE_PUBLICURL: http://localhost:3456
+      VIKUNJA_CORS_ENABLED: false
     ports:
       - "3456:3456"
 
