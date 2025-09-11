@@ -23,7 +23,7 @@ services:
       VIKUNJA_DATABASE_PASSWORD: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
       VIKUNJA_SERVICE_PUBLICURL: http://localhost:3456
-      VIKUNJA_CORS_ENABLED: false
+      VIKUNJA_CORS_ENABLE: false
     ports:
       - "3456:3456"
 
@@ -32,6 +32,8 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     restart: unless-stopped
+    environment:
+      VIKUNJA_CORS_ENABLE: false
     ports:
       - "8081:80"
     depends_on:
