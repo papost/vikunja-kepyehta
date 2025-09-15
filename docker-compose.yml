@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: vikunja
     volumes:
       - ./db:/var/lib/postgresql/data
+    networks:
+      - ix-portainer_default
 
   api:
     build:
@@ -26,6 +28,8 @@ services:
       VIKUNJA_CORS_ENABLE: false
     ports:
       - "31020:31020"
+    networks:
+      - ix-portainer_default
 
   frontend:
     build:
@@ -36,5 +40,11 @@ services:
       VIKUNJA_CORS_ENABLE: false
     ports:
       - "8090:80"
+    networks:
+      - ix-portainer_default
     depends_on:
       - api
+
+networks:
+  ix-portainer_default:
+    external: true
