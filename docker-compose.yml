@@ -27,7 +27,7 @@ services:
       VIKUNJA_SERVICE_PUBLICURL: http://192.168.19.170:31020
       VIKUNJA_CORS_ENABLE: false
     ports:
-      - "31020:31020"
+      - "3456:3456"
     networks:
       - ix-portainer_default
 
