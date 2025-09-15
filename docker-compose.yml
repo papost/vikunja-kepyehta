@@ -39,7 +39,7 @@ services:
     depends_on:
       - api
 
-  netwrorks:
+  networks:
     ix-portainer_default:
       driver: bridge
       ipam:
