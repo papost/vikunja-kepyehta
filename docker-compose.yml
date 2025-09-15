@@ -38,3 +38,10 @@ services:
       - "8090:80"
     depends_on:
       - api
+
+  netwrorks:
+    ix-portainer_default:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 192.168.20.0/24
