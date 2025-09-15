@@ -22,10 +22,10 @@ services:
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_PASSWORD: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_SERVICE_PUBLICURL: http://192.168.19.170:3456
+      VIKUNJA_SERVICE_PUBLICURL: http://localhost:31020
       VIKUNJA_CORS_ENABLE: false
     ports:
-      - "3456:3456"
+      - "31020:31020"
 
   frontend:
     build:
@@ -35,6 +35,6 @@ services:
     environment:
       VIKUNJA_CORS_ENABLE: false
     ports:
-      - "8081:80"
+      - "8090:80"
     depends_on:
       - api
